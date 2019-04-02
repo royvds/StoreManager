@@ -2,9 +2,9 @@
   "name": "storemanager",
   "version": "1.0.0",
   "description": "Manage your store!",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
-    "start": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode development",
+    "start": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode development --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0"
   }
 }
