@@ -1,20 +1,38 @@
 import React, { Component } from 'react'
-import Routes from '../routes'
 import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
+
+import Routes from '../routes'
 import Nav from '../components/shared/nav'
 
-import Home from './views/home'
-import Login from './views/login'
+const AppContent = () => (
+  <div>
+    <Nav />
 
-export default class App extends Component {
+    <Routes />
+  </div>
+)
+
+const LoadingScreen = () => (
+  <div className="loadingScreen">
+    <p>LOADING...</p>
+  </div>
+)
+
+class App extends Component {
+  state = {
+    isLoading : true
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: false })
+  }
+
   render() {
     return (
-      <div>
-        <Nav />
-
-        <Routes />
-      </div>
-    );
+      this.state.isLoading ? <LoadingScreen /> : <AppContent />
+    )
   }
 }
+
+export default App

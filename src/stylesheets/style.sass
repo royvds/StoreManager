@@ -1,13 +1,21 @@
+@import 'variables'
+@import 'palette'
+
 *
   margin: 0
   padding: 0
 
-nav
-  height: 80px
+.view-wrapper
   width: 100%
   position: absolute
+  top: $nav-height
+
+nav
   top: 0
   left: 0
+  width: 100%
+  height: $nav-height
+  position: absolute
   background-color: red
   &>ul>li>a
     color: white
