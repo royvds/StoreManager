@@ -5,7 +5,7 @@ import { Router, BrowserRouter } from 'react-router-dom';
 import routes from './routes';
 import App from './components/app'
 
-require('./stylesheets/style.css');
+require('./stylesheets/style.sass');
 
 ReactDOM.render((
   <BrowserRouter routes={routes}>
