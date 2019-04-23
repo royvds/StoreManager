@@ -1,21 +1,32 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
+const jwtDecode = require('jwt-decode')
+const jwtCookie = cookies.get('jwt')
 
 import Home from '../views/home'
 import Login from '../views/login'
 
-export default class Header extends Component {
+require('../../stylesheets/nav.sass')
+
+export default class Nav extends Component {
+  logout() {
+    cookies.remove('jwt')
+  }
+
   render() {
     return (
-      <nav>
+      <nav className='noselect'>
+        <img src='/images/logo-small.png' alt='Logo'/>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li><Link to='/home'>Home</Link></li>
-          <li><Link to='/login'>Login</Link></li>
+          <li><Link to='/login' onClick={this.logout}>Logout</Link></li>
         </ul>
       </nav>
-    );
+    )
   }
 }

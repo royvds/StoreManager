@@ -10,7 +10,7 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.sass$/,
+        test: /\.(sass|css|scss)$/,
         loaders: [
           require.resolve('style-loader'),
           require.resolve('css-loader'),

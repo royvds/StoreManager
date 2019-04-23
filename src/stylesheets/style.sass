@@ -5,17 +5,27 @@
   margin: 0
   padding: 0
 
+.noselect
+  -webkit-touch-callout: none; // iOS Safari
+  -webkit-user-select: none    // Safari
+   -khtml-user-select: none    // Konqueror HTML
+     -moz-user-select: none    // Firefox
+      -ms-user-select: none    // Internet Explorer/Edge
+          user-select: none    // Non-prefixed version,Chrome and Opera
+
+body
+  background-color: $background-color
+
 .view-wrapper
   width: 100%
   position: absolute
-  top: $nav-height
+  padding-top: $nav-height
+  box-sizing: border-box
+  padding-top: $nav-height
+  box-sizing: border-box
+  min-height: 100%
 
-nav
-  top: 0
-  left: 0
-  width: 100%
-  height: $nav-height
-  position: absolute
-  background-color: red
-  &>ul>li>a
-    color: white
+button
+   outline:none
+   &::-moz-focus-inner
+    border: 0

@@ -1,38 +1,22 @@
+import { BrowserRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import { Route } from 'react-router'
-import { BrowserRouter } from 'react-router-dom'
 
 import Routes from '../routes'
 import Nav from '../components/shared/nav'
 
-const AppContent = () => (
-  <div>
-    <Nav />
+import ButterToast, { POS_TOP, POS_RIGHT } from 'butter-toast';
 
-    <Routes />
-  </div>
-)
-
-const LoadingScreen = () => (
-  <div className="loadingScreen">
-    <p>LOADING...</p>
-  </div>
-)
-
-class App extends Component {
-  state = {
-    isLoading : true
-  }
-
-  componentDidMount() {
-    this.setState({ isLoading: false })
-  }
-
+export default class App extends Component {
   render() {
     return (
-      this.state.isLoading ? <LoadingScreen /> : <AppContent />
+      <div>
+        <ButterToast position={{vertical: POS_TOP, horizontal: POS_RIGHT}} />
+
+        <Nav />
+
+        <Routes />
+      </div>
     )
   }
 }
-
-export default App

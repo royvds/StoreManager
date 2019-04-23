@@ -1,0 +1,32 @@
+@import 'variables'
+@import 'palette'
+
+nav
+  top: 0
+  left: 0
+  width: 100%
+  height: $nav-height
+  position: absolute
+  background-color: $nav-color
+  border-bottom: 1px solid rgba(138,183,232,.3)
+  z-index: 70
+  &>img
+    left: 20px
+    top: 50%
+    transform: translateY(-50%)
+    height: $nav-height - 30px
+    line-height: $nav-height
+    position: absolute
+  &>ul
+    top: 50%
+    right: 20px
+    transform: translateY(-50%)
+    position: absolute
+    display: flex
+    flex-direction: row
+    &>li
+      list-style-type: none
+      &>a
+        color: black
+        display: block
+        padding: 0 10px

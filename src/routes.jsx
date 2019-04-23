@@ -1,34 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Route } from 'react-router'
-import { BrowserRouter, Switch, Redirect } from 'react-router-dom'
+import { Switch, Redirect } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute.jsx'
 
 import App from './components/app'
 import Home from './components/views/home'
 import Login from './components/views/login'
 import Error404 from './components/error/error404'
+import Error403 from './components/error/error403'
 
-function PrivateRoute ({component: Component, roles, ...rest}) {
-  console.log("YASH: " + roles.indexOf("employee"))
-  return (
-    <Route
-      {...rest}
-      /* indexOf returns index of -1 when it is not present in the array */
-      render={(props) => roles.indexOf("employee") != -1
-        ? <Component {...props} />
-      : <Redirect to={{pathname: '/403', state: {from: props.location}}} />}
-    />
-  )
-}
-
-const routes = () => (
+const routes = ({props}) => (
   <Switch >
-    <Redirect from="/home" to="/" />
-    <Route exact path="/" component={Home} />
+    <Route path='/login' component={Login} />
 
-    <PrivateRoute roles={"emplosyee", "sdfsdfsd", "employee"} path="/login" component={Login} />
+    <PrivateRoute allowedRoles={'ROLE_AUTHENTICATED'} exact path='/' component={Home} />
 
-    <Route component={Error404} />
-    <Redirect to="/404" />
+    <Route path='/403' component={Error403} />
+    <Route path='/404' component={Error404} />
+    <Redirect to='/404' />
   </Switch >
 )
 
