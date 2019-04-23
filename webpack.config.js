@@ -1,13 +1,21 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.jsx',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
+      },
+      {
+        test: /\.(sass|css|scss)$/,
+        loaders: [
+          require.resolve('style-loader'),
+          require.resolve('css-loader'),
+          require.resolve('sass-loader')
+        ]
       }
     ]
   },
@@ -23,6 +31,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
+    historyApiFallback: true,
     contentBase: './dist',
     hot: true
   }
