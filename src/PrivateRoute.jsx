@@ -5,9 +5,10 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
-const jwtCookie = cookies.get('jwt')
 
 function PrivateRoute ({component: Component, allowedRoles, ...rest}) {
+  let jwtCookie = cookies.get('jwt')
+
   if (
     ((allowedRoles.indexOf('ROLE_ANONYMOUS') != -1) && jwtCookie == undefined) ||
     ((allowedRoles.indexOf('ROLE_AUTHENTICATED') != -1) && jwtCookie != undefined) ||
