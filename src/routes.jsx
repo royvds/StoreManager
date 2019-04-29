@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute.jsx'
 import App from './components/app'
 import Home from './components/views/home'
 import Login from './components/views/login'
+import Planner from './components/views/planner'
 import Error404 from './components/error/error404'
 import Error403 from './components/error/error403'
 
@@ -14,6 +15,8 @@ const routes = ({props}) => (
     <Route path='/login' component={Login} />
 
     <PrivateRoute allowedRoles={'ROLE_AUTHENTICATED'} exact path='/' component={Home} />
+
+    <Route path='/planner' component={Planner} />
 
     <Route path='/403' component={Error403} />
     <Route path='/404' component={Error404} />

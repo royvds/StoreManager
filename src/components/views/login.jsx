@@ -44,7 +44,7 @@ export default class Login extends Component {
                 content={() => <p>We could not connect to the REST service, please try again later.</p>}
                 title='Login Failed'/>
         })
-      else if (error.response.status === 400)
+      else if (error.response.status == 400 || error.response.status == 401)
         ButterToast.raise({
             timeout: 5000,
             content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_ORANGE}

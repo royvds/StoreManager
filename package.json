@@ -5,6 +5,7 @@
   "main": "index.jsx",
   "scripts": {
     "start": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode development --history-api-fallback",
+    "prod": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode production --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,10 +33,12 @@
     "jwt-decode": "^2.2.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
+    "react-beautiful-dnd": "^11.0.0",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "sass-loader": "^7.1.0",
+    "serve": "^11.0.0",
     "universal-cookie": "^3.1.0"
   }
 }

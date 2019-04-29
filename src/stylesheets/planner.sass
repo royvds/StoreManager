@@ -1,0 +1,32 @@
+.plannerColumn
+  width: 180px
+  display: flex
+  min-height: 500px
+  flex-direction: column
+  border-left: 1px solid grey
+  border-right: 1px solid grey
+  & > p:first-child
+    width: 100%
+    font-size: 21px
+    text-align: center
+    font-family: 'Roboto', sans-serif
+
+#planner
+  margin: auto
+  display: flex
+  padding: 20px
+  position: relative
+  border-radius: 10px
+  flex-direction: row
+  background-color: white
+  & > div
+    margin-left: 10px
+  & > div:first-child
+    border-left: none
+    margin-left: none
+  & > div:last-child
+    border-right: none
+  & > div > Droppable
+    width: 100%
+    min-height: 100%
+    position: relative
