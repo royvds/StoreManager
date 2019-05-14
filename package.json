@@ -30,7 +30,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "butter-toast": "^3.3.2",
+    "clone": "^2.1.2",
     "jwt-decode": "^2.2.0",
+    "luxon": "^1.12.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.0",
@@ -39,6 +41,7 @@
     "react-router-dom": "^5.0.0",
     "sass-loader": "^7.1.0",
     "serve": "^11.0.0",
-    "universal-cookie": "^3.1.0"
+    "universal-cookie": "^3.1.0",
+    "uuid": "^3.3.2"
   }
 }
