@@ -1,72 +1,17 @@
+import { DragDropContext } from 'react-beautiful-dnd'
+import PlannerEmployeeItemList from '../../partial/plannerEmployeeItemList'
+import PlannerDayColumn from '../../partial/plannerDayColumn'
+import { reorder, move, createTask } from './plannerLogic'
+import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
-import axios from 'axios';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import PlannerDayColumn from '../partial/plannerDayColumn'
 import Cookies from 'universal-cookie'
-import PlannerEmployeeItemList from '../partial/plannerEmployeeItemList'
-import {DateTime, Info} from 'luxon'
+import { DateTime, Info } from 'luxon'
+import axios from 'axios/index';
 import uuidv1 from 'uuid/v1'
-import clone from 'clone'
-import ButterToast, { Cinnamon } from 'butter-toast';
 
 const cookies = new Cookies()
 
-// fake data generator
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: uuidv1(),
-    name: 'Test user',
-    startTime: '17:00',
-    endTime: '21:00',
-  }))
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-  return result
-}
-
-// Moves an item from one list to another list.
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-
-  const [removed] = sourceClone.splice(droppableSource.index, 1)
-
-  destClone.splice(droppableDestination.index, 0, removed)
-
-  const result = {}
-  result[droppableSource.droppableId] = sourceClone
-  result[droppableDestination.droppableId] = destClone
-
-  return result
-}
-
-const copy = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-
-  let startTime = document.getElementById('startTime').value
-  let endTime = document.getElementById('endTime').value
-
-  destClone.splice(droppableDestination.index, 0, {
-    id: uuidv1(),
-    content: clone(sourceClone[droppableSource.index].content),
-    name: clone(sourceClone[droppableSource.index].name),
-    startTime: startTime,
-    endTime: endTime
-  })
-
-  const result = {}
-  result[droppableSource.droppableId] = sourceClone
-  result[droppableDestination.droppableId] = destClone
-
-  return result
-}
-
-require('../../stylesheets/planner.sass')
+require('../../../stylesheets/planner.sass')
 
 export default class Planner extends Component {
   state = {
@@ -116,8 +61,6 @@ export default class Planner extends Component {
 
   onDragEnd = result => {
     const { source, destination } = result
-
-    // dropped outside the list
     if (!destination) return
 
     if (source.droppableId === destination.droppableId) {
@@ -128,43 +71,47 @@ export default class Planner extends Component {
         destination.index
       )
       this.setState(_state)
-    } else {
-      let result
-      if (source.droppableId == 'employees') {
-        let startTime = document.getElementById('startTime').value
-        let endTime = document.getElementById('endTime').value
+    }
+    else if (source.droppableId == 'employees') {
+      let startTime = document.getElementById('startTime').value
+      let endTime = document.getElementById('endTime').value
 
-        console.log (startTime > endTime)
-
-        if (startTime === '' || endTime === '' || startTime > endTime) {
-          ButterToast.raise({
-            timeout: 5000,
-            content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
-                                     content={() => <p>Please make sure you have entered proper times</p>}
-                                     title='Task creation failed!'/>
-          })
-        } else {
-          result = copy(
-            this.getList(source.droppableId),
-            this.getList(destination.droppableId),
-            source,
-            destination
-          )
-        }
-      }
-      else {
-        result = move(
+      if (startTime === '' || endTime === '' || startTime > endTime) {
+        ButterToast.raise({
+          timeout: 5000,
+          content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
+                                   content={() => <p>Please make sure you have entered proper times</p>}
+                                   title='Task creation failed!'/>
+        })
+      } else {
+        result = createTask(
           this.getList(source.droppableId),
           this.getList(destination.droppableId),
           source,
           destination
         )
       }
-
-      let _state = {} // update both the source and destination array in state
-      for (let key of Object.keys(result)) _state[key] = result[key]
-      this.setState(_state)
     }
+    else if (destination.droppableId == 'employees' &&
+      source.droppableId !== destination.droppableId) {
+      ButterToast.raise({
+        timeout: 5000,
+        content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
+                                 content={() => <p>You can't place a task there</p>}
+                                 title='You cannot do that!'/>
+      })
+    }
+    else {
+      result = move(
+        this.getList(source.droppableId),
+        this.getList(destination.droppableId),
+        source,
+        destination
+      )
+    }
+    let _state = {} // update both the source and destination array in state
+    for (let key of Object.keys(result)) _state[key] = result[key]
+    this.setState(_state)
   }
 
   goToPreviousWeek() { this.setState({week: this.state.week - 1}) }

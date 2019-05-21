@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da1e1990-09b3-44f3-82b3-0e1adabcecdb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/views/planner/plannerLogic.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/partial/plannerDayColumn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/partial/plannerDayColumn.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/partial/plannerEmployeeItemList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/partial/plannerEmployeeItemList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/views/login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/views/planner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/planner.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/views/planner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/views/planner/planner.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stylesheets/planner.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/stylesheets/planner.sass" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -24,37 +22,25 @@
     <splitter split-orientation="horizontal" split-proportion="0.6683838">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/components/partial/plannerDayColumn.jsx">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="489">
-                  <caret line="75" column="36" selection-start-line="75" selection-start-column="36" selection-end-line="75" selection-end-column="36" />
-                  <folding>
-                    <element signature="e#0#40#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/components/views/planner.jsx">
+            <entry file="file://$PROJECT_DIR$/src/components/views/planner/planner.jsx">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="144">
-                  <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+                <state relative-caret-position="264">
+                  <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
                   <folding>
-                    <element signature="e#0#40#0" expanded="true" />
+                    <element signature="e#0#53#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/components/views/login.jsx">
+            <entry file="file://$PROJECT_DIR$/src/components/views/planner/plannerLogic.jsx">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret selection-end-column="53" />
+                <state relative-caret-position="1128">
+                  <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
                   <folding>
-                    <element signature="e#0#73#0" expanded="true" />
+                    <element signature="e#71#99#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -67,8 +53,17 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/stylesheets/planner.sass">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="434">
-                  <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+                <state relative-caret-position="50">
+                  <caret line="61" column="24" lean-forward="true" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/stylesheets/login.sass">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret selection-end-line="1" selection-end-column="17" />
                 </state>
               </provider>
             </entry>
@@ -105,11 +100,13 @@
         <option value="$PROJECT_DIR$/src/PrivateRoute.jsx" />
         <option value="$PROJECT_DIR$/src/components/partial/plannerEmployeeItem.jsx" />
         <option value="$PROJECT_DIR$/src/components/partial/plannerEmployeeItemlist.jsx" />
-        <option value="$PROJECT_DIR$/src/stylesheets/planner.sass" />
         <option value="$PROJECT_DIR$/src/components/partial/plannerDayColumn.jsx" />
         <option value="$PROJECT_DIR$/src/components/partial/plannerEmployeeItemList.jsx" />
         <option value="$PROJECT_DIR$/src/components/views/login.jsx" />
+        <option value="$PROJECT_DIR$/src/stylesheets/planner.sass" />
         <option value="$PROJECT_DIR$/src/components/views/planner.jsx" />
+        <option value="$PROJECT_DIR$/src/components/views/planner/plannerLogic.jsx" />
+        <option value="$PROJECT_DIR$/src/components/views/planner/planner.jsx" />
       </list>
     </option>
   </component>
@@ -152,6 +149,20 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="storemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="storemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="planner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="storemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="storemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="stylesheets" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -173,6 +184,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/views/planner" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -186,7 +202,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="planner.jsx" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="planner.jsx" working-dir="$PROJECT_DIR$/src/components/views">
+    <configuration name="planner.jsx" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/components/views/planner/planner.jsx" working-dir="$PROJECT_DIR$/src/components/views">
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -216,12 +232,12 @@
       <workItem from="1557228414583" duration="2669000" />
       <workItem from="1557824787744" duration="13635000" />
       <workItem from="1557902729250" duration="1203000" />
-      <workItem from="1558427072223" duration="6046000" />
+      <workItem from="1558427072223" duration="7749000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58581000" />
+    <option name="totallyTimeSpent" value="60284000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="31" width="1920" height="982" extended-state="6" />
@@ -242,7 +258,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="TypeScript" order="9" weight="0.3293124" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.28639618" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.28639618" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -275,27 +291,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/components/partial/plannerDayColumn" />
     <entry file="file://$PROJECT_DIR$/src/components/partial/plannerUsersColumn" />
-    <entry file="file://$PROJECT_DIR$/src/stylesheets/login.sass">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/stylesheets/palette.sass">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="34" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/stylesheets/planner.sass">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PrivateRoute.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
@@ -328,7 +323,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/views/login.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="-190">
           <caret selection-end-column="53" />
           <folding>
             <element signature="e#0#73#0" expanded="true" />
@@ -336,12 +331,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/views/planner.jsx">
+    <entry file="file://$PROJECT_DIR$/src/stylesheets/login.sass">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        <state>
+          <caret selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/stylesheets/planner.sass">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="61" column="24" lean-forward="true" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/stylesheets/palette.sass">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="34" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/views/planner/plannerLogic.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1128">
+          <caret line="47" column="1" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#71#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/views/planner/planner.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute.jsx'
 import App from './components/app'
 import Home from './components/views/home'
 import Login from './components/views/login'
-import Planner from './components/views/planner'
+import Planner from './components/views/planner/planner'
 import Error404 from './components/error/error404'
 import Error403 from './components/error/error403'
 
