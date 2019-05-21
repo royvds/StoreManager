@@ -1,9 +1,7 @@
-import ButterToast, { Cinnamon, POS_TOP, POS_RIGHT } from 'butter-toast';
+import ButterToast, { Cinnamon } from 'butter-toast';
 import React, { Component } from 'react'
 import Cookies from 'universal-cookie'
 import axios from 'axios'
-
-import nav from '../shared/nav'
 
 const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
@@ -67,11 +65,11 @@ export default class Login extends Component {
         <form id='loginForm' onSubmit={(e) =>
             this.login(document.getElementById('loginForm-email').value,
             document.getElementById('loginForm-password').value, e)}>
-          <input type='text' id='loginForm-email' placeholder='e-mail adres'></input>
-          <input type='password' id='loginForm-password' placeholder='wachtwoord'></input>
+          <input type='text' id='loginForm-email' placeholder='e-mail adres' />
+          <input type='password' id='loginForm-password' placeholder='wachtwoord' />
           <button>Login</button>
         </form>
       </div>
-    );
+    )
   }
 }

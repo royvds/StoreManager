@@ -46,7 +46,10 @@ export default class PlannerEmployeeItemList extends Component {
                       provided.draggableProps.style
                     )}
                   >
-                    {item.content}
+                    <div>
+                      <p>{item.name}</p>
+                      <p>{item.role.name.substr(5)}</p>
+                    </div>
                   </div>
                 )}
               </Draggable>

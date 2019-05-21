@@ -62,6 +62,7 @@ export default class PlannerDayColumn extends Component {
                       index={index}>
                         {(provided, snapshot) => (
                           <div
+                            key={item.id}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -69,7 +70,10 @@ export default class PlannerDayColumn extends Component {
                               snapshot.isDragging,
                               provided.draggableProps.style
                             )}>
-                             {item.content}
+                              <div>
+                                <p>{item.name}</p>
+                                <p>{item.startTime} - {item.endTime}</p>
+                              </div>
                           </div>
                         )}
                     </Draggable>

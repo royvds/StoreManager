@@ -4,22 +4,20 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import PlannerDayColumn from '../partial/plannerDayColumn'
 import Cookies from 'universal-cookie'
 import PlannerEmployeeItemList from '../partial/plannerEmployeeItemList'
+import {DateTime, Info} from 'luxon'
+import uuidv1 from 'uuid/v1'
+import clone from 'clone'
+import ButterToast, { Cinnamon } from 'butter-toast';
 
-const uuidv1 = require('uuid/v1')
 const cookies = new Cookies()
-const { DateTime } = require('luxon')
-const clone = require('clone');
 
 // fake data generator
 const getItems = (count, offset = 0) =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
     id: uuidv1(),
-    content:
-      (<div>
-        <p>Roy van der Steen</p>
-        <p>17:00 - 21:00</p>
-        <p>{`item-${k + offset}`}</p>
-      </div>)
+    name: 'Test user',
+    startTime: '17:00',
+    endTime: '21:00',
   }))
 
 // a little function to help us with reordering the result
@@ -50,9 +48,15 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source)
   const destClone = Array.from(destination)
 
+  let startTime = document.getElementById('startTime').value
+  let endTime = document.getElementById('endTime').value
+
   destClone.splice(droppableDestination.index, 0, {
     id: uuidv1(),
-    content: clone(sourceClone[droppableSource.index].content)
+    content: clone(sourceClone[droppableSource.index].content),
+    name: clone(sourceClone[droppableSource.index].name),
+    startTime: startTime,
+    endTime: endTime
   })
 
   const result = {}
@@ -68,15 +72,10 @@ export default class Planner extends Component {
   state = {
     employees: [],
     loadEmployees: false,
-    week: DateTime.fromObject(Date.now()).weekNumber,
-    year: DateTime.fromObject(Date.now()).year,
-    monday: getItems(10),
-    tuesday: getItems(5, 10),
-    wednesday: getItems(5, 20),
-    thursday: getItems(5, 30),
-    friday: getItems(5, 40),
-    saturday: getItems(5, 50),
-    sunday: getItems(5, 60)
+    week: DateTime.local().weekNumber,
+    year: DateTime.local().year,
+    monday: [], tuesday: [], wednesday: [], thursday: [],
+    friday: [], saturday: [], sunday: []
   }
 
   constructor(props) {
@@ -97,14 +96,9 @@ export default class Planner extends Component {
       let newArray = []
       for (let i = 0; i < res.data.length; i++) {
         newArray[i] = {
-          id: `item-${i + 80}`,
-          // userId: res.data[i].id,
-          content: (
-            <div>
-              <p>{res.data[i].name}</p>
-             <p>{res.data[i].roles[0].name.substr(5)}</p>
-            </div>
-          )
+          id: uuidv1(),
+          name: res.data[i].name,
+          role: res.data[i].roles[0]
         }
       }
       this.setState({employees: newArray})
@@ -137,12 +131,26 @@ export default class Planner extends Component {
     } else {
       let result
       if (source.droppableId == 'employees') {
-        result = copy(
-          this.getList(source.droppableId),
-          this.getList(destination.droppableId),
-          source,
-          destination
-        )
+        let startTime = document.getElementById('startTime').value
+        let endTime = document.getElementById('endTime').value
+
+        console.log (startTime > endTime)
+
+        if (startTime === '' || endTime === '' || startTime > endTime) {
+          ButterToast.raise({
+            timeout: 5000,
+            content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
+                                     content={() => <p>Please make sure you have entered proper times</p>}
+                                     title='Task creation failed!'/>
+          })
+        } else {
+          result = copy(
+            this.getList(source.droppableId),
+            this.getList(destination.droppableId),
+            source,
+            destination
+          )
+        }
       }
       else {
         result = move(
@@ -163,10 +171,6 @@ export default class Planner extends Component {
   goToNextWeek() { this.setState({week: this.state.week + 1}) }
 
   render() {
-    let employeelist = this.state.employees.map((empl) => {
-      return <li>{empl.name}</li>
-    })
-
     return (
       <div className='view-wrapper noselect'>
         <div id='planner-header'>
@@ -175,13 +179,15 @@ export default class Planner extends Component {
           <p onClick={this.goToNextWeek}>&gt;</p>
         </div>
 
+        <div id='planner-toolbar'>
+          <input type='time' id='startTime' />
+          <input type='time' id='endTime' />
+        </div>
+        
         <DragDropContext onDragEnd={this.onDragEnd}>
-
-
           {this.state.loadEmployees &&
-          <PlannerEmployeeItemList droppableId='employees' items={this.state.employees} />
+            <PlannerEmployeeItemList droppableId='employees' items={this.state.employees} />
           }
-
 
           <div id='planner'>
             <PlannerDayColumn droppableId='monday'    items={this.state.monday}     date={this.getDate(this.state.year, this.state.week, 1)} />
