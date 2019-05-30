@@ -1,22 +1,23 @@
+import PlannerEmployeeItemList from './plannerEmployeeItemList'
+import { reorder, move, createTask, getDate } from './plannerLogic'
+import PlannerDayColumn from './plannerDayColumn'
 import { DragDropContext } from 'react-beautiful-dnd'
-import PlannerEmployeeItemList from '../../partial/plannerEmployeeItemList'
-import PlannerDayColumn from '../../partial/plannerDayColumn'
-import { reorder, move, createTask } from './plannerLogic'
 import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
 import Cookies from 'universal-cookie'
 import { DateTime, Info } from 'luxon'
-import axios from 'axios/index';
+import axios from 'axios/index'
 import uuidv1 from 'uuid/v1'
 
 const cookies = new Cookies()
 
-require('../../../stylesheets/planner.sass')
+require('../../stylesheets/planner.sass')
 
 export default class Planner extends Component {
   state = {
     employees: [],
     loadEmployees: false,
+    weekId: undefined,
     week: DateTime.local().weekNumber,
     year: DateTime.local().year,
     monday: [], tuesday: [], wednesday: [], thursday: [],
@@ -27,6 +28,7 @@ export default class Planner extends Component {
     super(props)
     this.goToPreviousWeek = this.goToPreviousWeek.bind(this)
     this.goToNextWeek = this.goToNextWeek.bind(this)
+    this.saveWeek = this.saveWeek.bind(this)
   }
 
   componentDidMount(){
@@ -40,10 +42,12 @@ export default class Planner extends Component {
     .then((res) => {
       let newArray = []
       for (let i = 0; i < res.data.length; i++) {
+        let user = res.data[i]
         newArray[i] = {
           id: uuidv1(),
-          name: res.data[i].name,
-          role: res.data[i].roles[0]
+          userId: user.id,
+          name: user.name,
+          role: user.roles[0]
         }
       }
       this.setState({employees: newArray})
@@ -51,14 +55,14 @@ export default class Planner extends Component {
     })
   }
 
+  // loadWeek() {
+  //   axios({
+  //     method: 'get',
+  //     url: `http://localhost:8090/api/planner/week/${this.state.year}/${this.state.week}`
+  //   })
+  // }
+
   getList = id => this.state[id]
-
-  // noinspection JSMethodCanBeStatic
-  getDate(year, week, day) {
-    if (day < 1 || day > 7 || day.isNaN) return
-    return DateTime.fromObject({ weekYear: year, weekNumber: week, weekday: day })
-  }
-
   onDragEnd = result => {
     const { source, destination } = result
     if (!destination) return
@@ -88,7 +92,10 @@ export default class Planner extends Component {
           this.getList(source.droppableId),
           this.getList(destination.droppableId),
           source,
-          destination
+          destination,
+          this.state.year,
+          this.state.week,
+          this.state.weekId
         )
       }
     }
@@ -117,6 +124,60 @@ export default class Planner extends Component {
   goToPreviousWeek() { this.setState({week: this.state.week - 1}) }
   goToNextWeek() { this.setState({week: this.state.week + 1}) }
 
+  saveWeek() {
+    let tasks = []
+    this.state.monday.forEach(task => tasks.push(task))
+    this.state.tuesday.forEach(task => tasks.push(task))
+    this.state.wednesday.forEach(task => tasks.push(task))
+    this.state.thursday.forEach(task => tasks.push(task))
+    this.state.friday.forEach(task => tasks.push(task))
+    this.state.saturday.forEach(task => tasks.push(task))
+    this.state.sunday.forEach(task => tasks.push(task))
+
+    let week = {
+      weekId: this.state.weekId,
+      planningHasBeenFinished: false,
+      year: this.state.year,
+      weekNumber: this.state.week,
+      tasks: tasks
+    }
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8090/api/planner/week',
+      data: week
+    }).then(res => {
+      this.setState({weekId: res.data.weekId, monday: [], tuesday: [],
+        wednesday: [], thursday: [], friday: [], saturday: [], sunday: []})
+
+      res.data.tasks.forEach(task => {
+        task.key = uuidv1()
+
+        this.state.employees.forEach(employee => {
+          if (task.userId === employee.userId) task.name = employee.name
+        })
+
+        // Convert Date strings to Date Objects
+        task.beginDateTime = new Date(task.beginDateTime)
+        task.endDateTime = new Date(task.endDateTime)
+
+        switch (task.beginDateTime.getDay()) {
+          case 1: this.state.monday.push(task); break
+          case 2: this.state.tuesday.push(task); break
+          case 3: this.state.wednesday.push(task); break
+          case 4: this.state.thursday.push(task); break
+          case 5: this.state.friday.push(task); break
+          case 6: this.state.saturday.push(task); break
+          case 0: this.state.sunday.push(task); break
+        }
+      })
+
+      this.forceUpdate()
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   render() {
     return (
       <div className='view-wrapper noselect'>
@@ -129,6 +190,7 @@ export default class Planner extends Component {
         <div id='planner-toolbar'>
           <input type='time' id='startTime' />
           <input type='time' id='endTime' />
+          <button onClick={this.saveWeek}>Save Week</button>
         </div>
         
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -137,13 +199,13 @@ export default class Planner extends Component {
           }
 
           <div id='planner'>
-            <PlannerDayColumn droppableId='monday'    items={this.state.monday}     date={this.getDate(this.state.year, this.state.week, 1)} />
-            <PlannerDayColumn droppableId='tuesday'   items={this.state.tuesday}    date={this.getDate(this.state.year, this.state.week, 2)} />
-            <PlannerDayColumn droppableId='wednesday' items={this.state.wednesday}  date={this.getDate(this.state.year, this.state.week, 3)} />
-            <PlannerDayColumn droppableId='thursday'  items={this.state.thursday}   date={this.getDate(this.state.year, this.state.week, 4)} />
-            <PlannerDayColumn droppableId='friday'    items={this.state.friday}     date={this.getDate(this.state.year, this.state.week, 5)} />
-            <PlannerDayColumn droppableId='saturday'  items={this.state.saturday}   date={this.getDate(this.state.year, this.state.week, 6)} />
-            <PlannerDayColumn droppableId='sunday'    items={this.state.sunday}     date={this.getDate(this.state.year, this.state.week, 7)} />
+            <PlannerDayColumn droppableId='monday'    items={this.state.monday}     date={getDate(this.state.year, this.state.week, 1)} />
+            <PlannerDayColumn droppableId='tuesday'   items={this.state.tuesday}    date={getDate(this.state.year, this.state.week, 2)} />
+            <PlannerDayColumn droppableId='wednesday' items={this.state.wednesday}  date={getDate(this.state.year, this.state.week, 3)} />
+            <PlannerDayColumn droppableId='thursday'  items={this.state.thursday}   date={getDate(this.state.year, this.state.week, 4)} />
+            <PlannerDayColumn droppableId='friday'    items={this.state.friday}     date={getDate(this.state.year, this.state.week, 5)} />
+            <PlannerDayColumn droppableId='saturday'  items={this.state.saturday}   date={getDate(this.state.year, this.state.week, 6)} />
+            <PlannerDayColumn droppableId='sunday'    items={this.state.sunday}     date={getDate(this.state.year, this.state.week, 7)} />
           </div>
         </DragDropContext>
 

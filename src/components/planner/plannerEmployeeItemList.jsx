@@ -13,15 +13,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   background: isDragging ? 'lightgreen' : 'lightblue',
 
   // styles we need to apply on draggables
-  ...draggableStyle,
-});
+  ...draggableStyle
+})
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'rgb(98, 181, 229)' : 'aliceblue',
   display: 'flex',
   padding: grid,
-  overflow: 'auto',
-});
+  overflow: 'auto'
+})
 
 export default class PlannerEmployeeItemList extends Component {
   render() {
@@ -58,6 +58,6 @@ export default class PlannerEmployeeItemList extends Component {
           </div>
         )}
       </Droppable>
-    );
+    )
   }
 }

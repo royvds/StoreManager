@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router'
 
 import Routes from '../routes'
-import Nav from '../components/shared/nav'
+import Nav from './navigation/nav'
 
 import ButterToast, { POS_TOP, POS_RIGHT } from 'butter-toast';
 

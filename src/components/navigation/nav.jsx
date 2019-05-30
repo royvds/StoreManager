@@ -8,8 +8,8 @@ const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
 const jwtCookie = cookies.get('jwt')
 
-import Home from '../views/home'
-import Login from '../views/login'
+import Home from '../home/home'
+import Login from '../login/login'
 
 require('../../stylesheets/nav.sass')
 

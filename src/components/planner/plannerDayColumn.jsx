@@ -17,6 +17,12 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle
 })
 
+function getTime (date) {
+  let hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours()
+  let minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()
+  return hours + ":" + minutes
+}
+
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'rgb(98, 181, 229)' : 'transparent',
   padding: grid,
@@ -39,10 +45,12 @@ export default class PlannerDayColumn extends Component {
 
   updateTitleColor() {
     let now = new Date() // Set color of name of day to blue if that date is today
-    if (DateTime.fromObject(new Date()).toFormat('yyyy LLL dd') === this.props.date.toFormat('yyyy LLL dd')) {
-      document.getElementById(`dayColumn-${this.props.date.toFormat('yyyy-LL-dd')}`).childNodes[0].style.color = 'blue'
+    if (DateTime.fromObject(now).toFormat('yyyy LLL dd') === this.props.date.toFormat('yyyy LLL dd')) {
+      document.getElementById(`dayColumn-${this.props.date.toFormat('yyyy-LL-dd')}`)
+        .childNodes[0].style.color = 'blue'
     } else {
-      document.getElementById(`dayColumn-${this.props.date.toFormat('yyyy-LL-dd')}`).childNodes[0].style.color = 'black'
+      document.getElementById(`dayColumn-${this.props.date.toFormat('yyyy-LL-dd')}`)
+        .childNodes[0].style.color = 'black'
     }
   }
 
@@ -57,12 +65,12 @@ export default class PlannerDayColumn extends Component {
                 style={getListStyle(snapshot.isDraggingOver)}>
                   {this.props.items.map((item, index) => (
                     <Draggable
-                      key={item.id}
-                      draggableId={item.id}
+                      key={item.key}
+                      draggableId={item.key}
                       index={index}>
                         {(provided, snapshot) => (
                           <div
-                            key={item.id}
+                            key={item.key}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -72,7 +80,7 @@ export default class PlannerDayColumn extends Component {
                             )}>
                               <div>
                                 <p>{item.name}</p>
-                                <p>{item.startTime} - {item.endTime}</p>
+                                <p>{getTime(item.beginDateTime)} - {getTime(item.endDateTime)}</p>
                               </div>
                           </div>
                         )}
