@@ -56,16 +56,18 @@ export default class WeekDao {
   prepareWeek(weekResponse) {
     Info.weekdays().forEach(day => weekResponse[day.toLowerCase()] = [])
 
-    weekResponse.tasks.forEach(task => {
-      task.key = uuidv1()
+    if (weekResponse.tasks != null) {
+      weekResponse.tasks.forEach(task => {
+        task.key = uuidv1()
 
-      // Convert Date strings to Date Objects
-      task.beginDateTime = new Date(task.beginDateTime)
-      task.endDateTime = new Date(task.endDateTime)
+        // Convert Date strings to Date Objects
+        task.beginDateTime = new Date(task.beginDateTime)
+        task.endDateTime = new Date(task.endDateTime)
 
-      let index = task.beginDateTime.getDay()
-      weekResponse[Info.weekdays()[index == 0 ? 6 : index-1].toLowerCase()].push(task)
-    })
+        let index = task.beginDateTime.getDay()
+        weekResponse[Info.weekdays()[index == 0 ? 6 : index-1].toLowerCase()].push(task)
+      })
+    }
 
     // The tasks have now been sorted into days so we can safely delete them
     delete weekResponse['tasks']

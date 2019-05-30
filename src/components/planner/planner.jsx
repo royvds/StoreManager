@@ -33,44 +33,17 @@ export default class Planner extends Component {
 
   async componentDidMount(){
     this.setState({employees: await userDao.getUsers()})
+    this.viewWeek(await this.getWeek())
   }
 
   async componentDidUpdate(prevProps, prevState) {
+    //TODO: Cancel week retrieval request when another request is sent
+    // Because else you can get a loop of data retrieval (getWeek changes state, another request
+    // that was going on (async) also updates state and now the state keeps changing because the week is
+    // different all the time
     if (this.state.week != prevState.week || this.state.year != prevState.year){
-      let week = await this.getWeek()
-      console.log(week)
-      this.viewWeek(week)
+      this.viewWeek(await this.getWeek())
     }
-  }
-
-  isEquivalent(a, b) {
-    if (a == null && b != null) return false
-    else if (a == null && b == null) return true
-
-    // Create arrays of property names
-    let aProps = Object.getOwnPropertyNames(a)
-    let bProps = Object.getOwnPropertyNames(b)
-
-    // If number of properties is different,
-    // objects are not equivalent
-    if (aProps.length != bProps.length) {
-      return false;
-    }
-
-    for (let i = 0; i < aProps.length; i++) {
-      let propName = aProps[i];
-
-      // If values of same property are not equal,
-      // objects are not equivalent
-      if (a[propName] !== b[propName]) return false
-      console.log(typeof a[propName])
-      if (typeof  a[propName] === 'object') return this.isEquivalent(a[propName], b[propName])
-      // if (isNaN(a[propName]) && !isNaN(b[propName])) return false
-    }
-
-    // If we made it this far, objects
-    // are considered equivalent
-    return true
   }
 
   getList = id => this.state[id]
