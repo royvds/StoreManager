@@ -65,7 +65,7 @@ export const createTask =
     key: uuidv1(),
     id: null,
     weekId: weekId,
-    userId: user.userId,
+    userId: user.id,
     name: user.name,
     beginDateTime: beginDateTime,
     endDateTime: endDateTime

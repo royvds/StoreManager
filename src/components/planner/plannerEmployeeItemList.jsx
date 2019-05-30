@@ -25,6 +25,7 @@ const getListStyle = isDraggingOver => ({
 
 export default class PlannerEmployeeItemList extends Component {
   render() {
+    let {items} = this.props
     return (
       <Droppable droppableId={this.props.droppableId} direction="horizontal">
         {(provided, snapshot) => (
@@ -34,8 +35,8 @@ export default class PlannerEmployeeItemList extends Component {
             style={getListStyle(snapshot.isDraggingOver)}
             {...provided.droppableProps}
           >
-            {this.props.items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
+            {items.map((item, index) => (
+              <Draggable key={item.key} draggableId={item.key} index={index}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}

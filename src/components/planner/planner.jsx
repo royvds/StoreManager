@@ -1,25 +1,25 @@
 import PlannerEmployeeItemList from './plannerEmployeeItemList'
 import { reorder, move, createTask, getDate } from './plannerLogic'
 import PlannerDayColumn from './plannerDayColumn'
-import { DragDropContext } from 'react-beautiful-dnd'
+import {DragDropContext} from 'react-beautiful-dnd'
 import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
-import Cookies from 'universal-cookie'
 import { DateTime, Info } from 'luxon'
-import axios from 'axios/index'
-import uuidv1 from 'uuid/v1'
+import UserDao from './userDao'
+import WeekDao from './weekDao'
 
-const cookies = new Cookies()
+const userDao = new UserDao()
+const weekDao = new WeekDao()
 
 require('../../stylesheets/planner.sass')
 
 export default class Planner extends Component {
   state = {
     employees: [],
-    loadEmployees: false,
     weekId: undefined,
     week: DateTime.local().weekNumber,
     year: DateTime.local().year,
+    planningHasBeenFinished: false,
     monday: [], tuesday: [], wednesday: [], thursday: [],
     friday: [], saturday: [], sunday: []
   }
@@ -31,36 +31,47 @@ export default class Planner extends Component {
     this.saveWeek = this.saveWeek.bind(this)
   }
 
-  componentDidMount(){
-    axios({
-      method: 'get',
-      url: 'http://localhost:8090/api/user',
-      headers: {
-        Authorization: 'Bearer ' + cookies.get('jwt').accessToken
-      }
-    })
-    .then((res) => {
-      let newArray = []
-      for (let i = 0; i < res.data.length; i++) {
-        let user = res.data[i]
-        newArray[i] = {
-          id: uuidv1(),
-          userId: user.id,
-          name: user.name,
-          role: user.roles[0]
-        }
-      }
-      this.setState({employees: newArray})
-      this.setState({loadEmployees: true})
-    })
+  async componentDidMount(){
+    this.setState({employees: await userDao.getUsers()})
   }
 
-  // loadWeek() {
-  //   axios({
-  //     method: 'get',
-  //     url: `http://localhost:8090/api/planner/week/${this.state.year}/${this.state.week}`
-  //   })
-  // }
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.state.week != prevState.week || this.state.year != prevState.year){
+      let week = await this.getWeek()
+      console.log(week)
+      this.viewWeek(week)
+    }
+  }
+
+  isEquivalent(a, b) {
+    if (a == null && b != null) return false
+    else if (a == null && b == null) return true
+
+    // Create arrays of property names
+    let aProps = Object.getOwnPropertyNames(a)
+    let bProps = Object.getOwnPropertyNames(b)
+
+    // If number of properties is different,
+    // objects are not equivalent
+    if (aProps.length != bProps.length) {
+      return false;
+    }
+
+    for (let i = 0; i < aProps.length; i++) {
+      let propName = aProps[i];
+
+      // If values of same property are not equal,
+      // objects are not equivalent
+      if (a[propName] !== b[propName]) return false
+      console.log(typeof a[propName])
+      if (typeof  a[propName] === 'object') return this.isEquivalent(a[propName], b[propName])
+      // if (isNaN(a[propName]) && !isNaN(b[propName])) return false
+    }
+
+    // If we made it this far, objects
+    // are considered equivalent
+    return true
+  }
 
   getList = id => this.state[id]
   onDragEnd = result => {
@@ -124,58 +135,50 @@ export default class Planner extends Component {
   goToPreviousWeek() { this.setState({week: this.state.week - 1}) }
   goToNextWeek() { this.setState({week: this.state.week + 1}) }
 
-  saveWeek() {
+  mergeTasks() {
     let tasks = []
-    this.state.monday.forEach(task => tasks.push(task))
-    this.state.tuesday.forEach(task => tasks.push(task))
-    this.state.wednesday.forEach(task => tasks.push(task))
-    this.state.thursday.forEach(task => tasks.push(task))
-    this.state.friday.forEach(task => tasks.push(task))
-    this.state.saturday.forEach(task => tasks.push(task))
-    this.state.sunday.forEach(task => tasks.push(task))
+    Info.weekdays().forEach(day => {
+      this.state[day.toLowerCase()].forEach(task => tasks.push(task))
+      this.state[day.toLowerCase()] = []
+    })
+    return tasks
+  }
 
-    let week = {
+  async getWeek() {
+    return this.processWeek(await weekDao.getWeek(this.state.year, this.state.week))
+  }
+
+  async saveWeek() {
+    let tasks = this.mergeTasks()
+
+    let savedWeek = await weekDao.saveWeek({
       weekId: this.state.weekId,
-      planningHasBeenFinished: false,
+      planningHasBeenFinished: this.state.planningHasBeenFinished,
       year: this.state.year,
       weekNumber: this.state.week,
       tasks: tasks
-    }
-
-    axios({
-      method: 'post',
-      url: 'http://localhost:8090/api/planner/week',
-      data: week
-    }).then(res => {
-      this.setState({weekId: res.data.weekId, monday: [], tuesday: [],
-        wednesday: [], thursday: [], friday: [], saturday: [], sunday: []})
-
-      res.data.tasks.forEach(task => {
-        task.key = uuidv1()
-
-        this.state.employees.forEach(employee => {
-          if (task.userId === employee.userId) task.name = employee.name
-        })
-
-        // Convert Date strings to Date Objects
-        task.beginDateTime = new Date(task.beginDateTime)
-        task.endDateTime = new Date(task.endDateTime)
-
-        switch (task.beginDateTime.getDay()) {
-          case 1: this.state.monday.push(task); break
-          case 2: this.state.tuesday.push(task); break
-          case 3: this.state.wednesday.push(task); break
-          case 4: this.state.thursday.push(task); break
-          case 5: this.state.friday.push(task); break
-          case 6: this.state.saturday.push(task); break
-          case 0: this.state.sunday.push(task); break
-        }
-      })
-
-      this.forceUpdate()
-    }).catch(error => {
-      console.log(error)
     })
+
+    if (savedWeek == null) return
+    this.processWeek(savedWeek)
+    this.viewWeek(savedWeek)
+  }
+
+  viewWeek(week) {
+    Info.weekdays().forEach(day => this.state[day.toLowerCase()] = week[day.toLowerCase()])
+    this.setState({weekId: week.weekId, week: week.weekNumber, year: week.year})
+  }
+
+  processWeek(week) {
+    if (week == null) return null
+    Info.weekdays().forEach(day => {
+      week[day.toLowerCase()].forEach(task => {
+        this.state.employees.forEach(employee => {
+          if (task.userId == employee.id) task.name = employee.name
+        })
+      })
+    })
+    return week
   }
 
   render() {
@@ -188,13 +191,13 @@ export default class Planner extends Component {
         </div>
 
         <div id='planner-toolbar'>
-          <input type='time' id='startTime' />
-          <input type='time' id='endTime' />
+          <input type='time' id='startTime' value='09:00' />
+          <input type='time' id='endTime' value='10:00' />
           <button onClick={this.saveWeek}>Save Week</button>
         </div>
         
         <DragDropContext onDragEnd={this.onDragEnd}>
-          {this.state.loadEmployees &&
+          {this.state.employees != null && this.state.employees.length > 0 &&
             <PlannerEmployeeItemList droppableId='employees' items={this.state.employees} />
           }
 

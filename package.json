@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "butter-toast": "^3.3.2",
     "clone": "^2.1.2",
     "jwt-decode": "^2.2.0",

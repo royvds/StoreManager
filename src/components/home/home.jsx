@@ -5,6 +5,7 @@ import nav from '../navigation/nav'
 import App from '../app'
 
 export default class Home extends Component {
+
   render() {
     return (
       <div className='view-wrapper'>
