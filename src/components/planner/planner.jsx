@@ -37,10 +37,6 @@ export default class Planner extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    //TODO: Cancel week retrieval request when another request is sent
-    // Because else you can get a loop of data retrieval (getWeek changes state, another request
-    // that was going on (async) also updates state and now the state keeps changing because the week is
-    // different all the time
     if (this.state.week != prevState.week || this.state.year != prevState.year){
       this.viewWeek(await this.getWeek())
     }
@@ -138,8 +134,10 @@ export default class Planner extends Component {
   }
 
   viewWeek(week) {
-    Info.weekdays().forEach(day => this.state[day.toLowerCase()] = week[day.toLowerCase()])
-    this.setState({weekId: week.weekId, week: week.weekNumber, year: week.year})
+    if (week.weekNumber === this.state.week && week.year === this.state.year) {
+      Info.weekdays().forEach(day => this.state[day.toLowerCase()] = week[day.toLowerCase()])
+      this.setState({weekId: week.weekId, week: week.weekNumber, year: week.year})
+    }
   }
 
   processWeek(week) {
