@@ -162,8 +162,8 @@ export default class Planner extends Component {
         </div>
 
         <div id='planner-toolbar'>
-          <input type='time' id='startTime' value='09:00' />
-          <input type='time' id='endTime' value='10:00' />
+          <input type='time' id='startTime' />
+          <input type='time' id='endTime' />
           <button onClick={this.saveWeek}>Save Week</button>
         </div>
         
