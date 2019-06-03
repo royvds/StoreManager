@@ -67,7 +67,7 @@ export default class Login extends Component {
             document.getElementById('loginForm-password').value, e)}>
           <input type='text' id='loginForm-email' placeholder='e-mail adres' />
           <input type='password' id='loginForm-password' placeholder='wachtwoord' />
-          <button>Login</button>
+          <button id='loginForm-submit'>Login</button>
         </form>
       </div>
     )
