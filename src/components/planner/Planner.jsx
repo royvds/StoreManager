@@ -1,15 +1,17 @@
-import PlannerEmployeeItemList from './plannerEmployeeItemList'
-import { reorder, move, createTask, getDate } from './plannerLogic'
-import PlannerDayColumn from './plannerDayColumn'
+import PlannerEmployeeItemList from './PlannerEmployeeItemList'
+import PlannerDayColumn from './PlannerDayColumn'
 import {DragDropContext} from 'react-beautiful-dnd'
 import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
 import { DateTime, Info } from 'luxon'
-import UserDao from './userDao'
-import WeekDao from './weekDao'
+import UserService from './UserService'
+import WeekService from './WeekService'
+import {reorder, move, createTask} from './DragAndDrop'
+import {getDate} from './Time'
+import {processWeek} from './Week'
 
-const userDao = new UserDao()
-const weekDao = new WeekDao()
+const userService = new UserService()
+const weekService = new WeekService()
 
 require('../../stylesheets/planner.sass')
 
@@ -32,7 +34,7 @@ export default class Planner extends Component {
   }
 
   async componentDidMount(){
-    this.setState({employees: await userDao.getUsers()})
+    this.setState({employees: await userService.getUsers()})
     this.viewWeek(await this.getWeek())
   }
 
@@ -75,7 +77,9 @@ export default class Planner extends Component {
           destination,
           this.state.year,
           this.state.week,
-          this.state.weekId
+          this.state.weekId,
+          document.getElementById('startTime').value,
+          document.getElementById('endTime').value
         )
       }
     }
@@ -114,13 +118,13 @@ export default class Planner extends Component {
   }
 
   async getWeek() {
-    return this.processWeek(await weekDao.getWeek(this.state.year, this.state.week))
+    return processWeek(await weekService.getWeek(this.state.year, this.state.week))
   }
 
   async saveWeek() {
-    let tasks = this.mergeTasks()
+    const tasks = this.mergeTasks()
 
-    let savedWeek = await weekDao.saveWeek({
+    const savedWeek = await weekService.saveWeek({
       weekId: this.state.weekId,
       planningHasBeenFinished: this.state.planningHasBeenFinished,
       year: this.state.year,
@@ -129,7 +133,7 @@ export default class Planner extends Component {
     })
 
     if (savedWeek == null) return
-    this.processWeek(savedWeek)
+    processWeek(savedWeek)
     this.viewWeek(savedWeek)
   }
 
@@ -138,18 +142,6 @@ export default class Planner extends Component {
       Info.weekdays().forEach(day => this.state[day.toLowerCase()] = week[day.toLowerCase()])
       this.setState({weekId: week.weekId, week: week.weekNumber, year: week.year})
     }
-  }
-
-  processWeek(week) {
-    if (week == null) return null
-    Info.weekdays().forEach(day => {
-      week[day.toLowerCase()].forEach(task => {
-        this.state.employees.forEach(employee => {
-          if (task.userId == employee.id) task.name = employee.name
-        })
-      })
-    })
-    return week
   }
 
   render() {
@@ -182,7 +174,6 @@ export default class Planner extends Component {
             <PlannerDayColumn droppableId='sunday'    items={this.state.sunday}     date={getDate(this.state.year, this.state.week, 7)} />
           </div>
         </DragDropContext>
-
       </div>
     )
   }

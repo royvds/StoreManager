@@ -1,6 +1,6 @@
 import { shallow, mount, render } from 'enzyme'
 import React from 'react'
-import Login from '../../../components/login/login'
+import Login from '../../../components/login/Login'
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 

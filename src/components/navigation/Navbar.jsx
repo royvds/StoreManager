@@ -7,7 +7,7 @@ const cookies = new Cookies()
 
 require('../../stylesheets/nav.sass')
 
-class Nav extends Component {
+class Navbar extends Component {
   constructor(props) {
     super(props)
     this.logout = this.logout.bind(this)
@@ -46,4 +46,4 @@ class Nav extends Component {
   }
 }
 
-export default withRouter(Nav)
+export default withRouter(Navbar)
