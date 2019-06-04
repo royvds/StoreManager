@@ -138,8 +138,6 @@ export default class Planner extends Component {
   }
 
   viewWeek(week) {
-    console.log(week)
-    console.log(this.state)
     if (week.weekNumber === this.state.week && week.year === this.state.year) {
       Info.weekdays().forEach(day => this.state[day.toLowerCase()] = week[day.toLowerCase()])
       this.setState({weekId: week.weekId, week: week.weekNumber, year: week.year})
