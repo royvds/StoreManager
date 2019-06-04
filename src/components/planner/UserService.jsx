@@ -8,7 +8,7 @@ require("babel-polyfill")
 
 const cookies = new Cookies()
 
-export default class UserDao {
+export default class UserService {
   async getUsers() {
     let employees = []
 

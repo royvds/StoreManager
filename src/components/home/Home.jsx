@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import nav from '../navigation/nav'
-import App from '../app'
+import nav from '../navigation/Navbar'
+import App from '../App'
 
 export default class Home extends Component {
 

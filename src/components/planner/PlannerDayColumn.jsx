@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { getTimeFromDate } from './Time'
 
 const { DateTime } = require('luxon')
 const grid = 8
@@ -16,12 +17,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // styles we need to apply on draggables
   ...draggableStyle
 })
-
-function getTime (date) {
-  let hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours()
-  let minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()
-  return hours + ":" + minutes
-}
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'rgb(98, 181, 229)' : 'transparent',
@@ -80,7 +75,7 @@ export default class PlannerDayColumn extends Component {
                             )}>
                               <div>
                                 <p>{item.name}</p>
-                                <p>{getTime(item.beginDateTime)} - {getTime(item.endDateTime)}</p>
+                                <p>{getTimeFromDate(item.beginDateTime)} - {getTimeFromDate(item.endDateTime)}</p>
                               </div>
                           </div>
                         )}

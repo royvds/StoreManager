@@ -9,7 +9,7 @@ require("babel-polyfill")
 
 const cookies = new Cookies()
 
-export default class WeekDao {
+export default class WeekService {
   async getWeek(year, week) {
     try {
       const response = await axios({
