@@ -2,6 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 import { Redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie'
+import { withRouter } from 'react-router'
 
 const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
@@ -33,4 +34,4 @@ function PrivateRoute ({component: Component, allowedRoles, ...rest}) {
   }
 }
 
-export default PrivateRoute
+export default withRouter(PrivateRoute)
