@@ -14,7 +14,7 @@ describe('Login Component', () => {
     document.body.appendChild(div)
   })
 
-  it('Test login by jwt cookie', async () => {
+  it('Test login by jwt cookie, also tests if login is faster than 2 seconds', async () => {
     const wrapper = mount(<Login />, { attachTo: window.domNode })
     const mailInput = wrapper.find('#loginForm-email')
     const passwordInput = wrapper.find('#loginForm-password')
