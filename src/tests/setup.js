@@ -1,6 +1,8 @@
 import Enzyme, { shallow, render, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
+require("babel-polyfill")
+
 // React 16 Enzyme adapter
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -8,3 +10,4 @@ Enzyme.configure({ adapter: new Adapter() })
 global.shallow = shallow
 global.render = render
 global.mount = mount
+global.flushPromises = async () => {return await new Promise(resolve => setImmediate(resolve))}

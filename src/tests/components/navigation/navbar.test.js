@@ -1,4 +1,5 @@
 import { shallow, mount, render } from 'enzyme'
+import jwt from '../../../services/__mocks__/data/jwt.json'
 import React from 'react'
 import Navbar from '../../../components/navigation/Navbar'
 import Cookies from 'universal-cookie'
@@ -16,7 +17,7 @@ describe('Login Component', () => {
         const wrapper = shallow(<Navbar.WrappedComponent {...mockRouter.props()}/>)
 
         expect(wrapper.exists('#navLinks')).toBe(false)
-        cookies.set('jwt', 'Bearer ACCESS_TOKEN')
+        cookies.set('jwt', jwt)
         mockRouter.props().history.go('/')
         expect(wrapper.exists('#navLinks')).toBe(true)
     })

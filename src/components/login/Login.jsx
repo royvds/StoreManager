@@ -2,7 +2,9 @@ import ButterToast, { Cinnamon } from 'butter-toast';
 import React, { Component } from 'react'
 import Cookies from 'universal-cookie'
 import axios from 'axios'
+import AuthService from '../../services/AuthService'
 
+const authService = new AuthService()
 const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
 
@@ -23,18 +25,8 @@ export default class Login extends Component {
       password: pass
     }
 
-    axios({
-      method: 'post',
-      url: 'http://localhost:8090/api/auth/signin',
-      data: user
-    })
-    .then((res) => {
-      if (res.status == 200) {
-        cookies.set('jwt', res.data)
-        this.props.history.push('/')
-      }
-    })
-    .catch((error) => {
+    authService.login(user).catch((error) => {
+    console.log(error)
       if (error.response === undefined)
         ButterToast.raise({
             timeout: 5000,
@@ -57,6 +49,7 @@ export default class Login extends Component {
                 title='Login Failed'/>
         })
       })
+    this.props.history.push('/')
   }
 
   render() {
