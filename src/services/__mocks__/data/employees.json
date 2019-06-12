@@ -1,0 +1,79 @@
+[
+  {
+    "id": 4,
+    "name": "Patricia Bogaard",
+    "username": "PatriciaBogaard@kpnplanet.nl",
+    "roles": [
+      {
+        "id": 2,
+        "name": "ROLE_CASHIER"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Tonny van Ginkel",
+    "username": "TonnyvanGinkel@gmail.com",
+    "roles": [
+      {
+        "id": 4,
+        "name": "ROLE_ASSISTANT_MANAGER"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Reinhard Jekel",
+    "username": "R.Jekel@gmail.com",
+    "roles": [
+      {
+        "id": 1,
+        "name": "ROLE_EMPLOYEE"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Devon Nijzink",
+    "username": "DevonNijzink@hotmail.com",
+    "roles": [
+      {
+        "id": 1,
+        "name": "ROLE_EMPLOYEE"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Mayon Berghout",
+    "username": "M.Berghaut@upcmail.nl",
+    "roles": [
+      {
+        "id": 2,
+        "name": "ROLE_CASHIER"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Roy van der Steen",
+    "username": "vdsteenroy@hotmail.nl",
+    "roles": [
+      {
+        "id": 3,
+        "name": "ROLE_LEADER"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Seema Christiaans",
+    "username": "SeemaChristiaans@rhyta.com",
+    "roles": [
+      {
+        "id": 5,
+        "name": "ROLE_MANAGER"
+      }
+    ]
+  }
+]

@@ -1,10 +1,12 @@
-import { shallow, mount, render } from 'enzyme'
 import React from 'react'
 import Login from '../../../components/login/Login'
 import Cookies from 'universal-cookie'
+import ReactRouterEnzymeContext from "react-router-enzyme-context";
 const cookies = new Cookies()
 
 require("babel-polyfill")
+
+jest.mock('../../../services/AuthService')
 
 describe('Login Component', () => {
 
@@ -14,8 +16,9 @@ describe('Login Component', () => {
     document.body.appendChild(div)
   })
 
-  it('Test login by jwt cookie', async () => {
-    const wrapper = mount(<Login />, { attachTo: window.domNode })
+  it('Test login by jwt cookie, also tests if login is faster than 2 seconds', async () => {
+    const mockRouter = new ReactRouterEnzymeContext()
+    const wrapper = mount(<Login {...mockRouter.props()} />, { attachTo: window.domNode })
     const mailInput = wrapper.find('#loginForm-email')
     const passwordInput = wrapper.find('#loginForm-password')
     const submitButton = wrapper.find('#loginForm-submit')

@@ -4,8 +4,8 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
 import { DateTime, Info } from 'luxon'
-import UserService from './UserService'
-import WeekService from './WeekService'
+import UserService from '../../services/UserService'
+import WeekService from '../../services/WeekService'
 import {reorder, move, createTask} from './DragAndDrop'
 import {getDate} from './Time'
 import {processWeek} from './Week'
@@ -34,14 +34,17 @@ export default class Planner extends Component {
   }
 
   async componentDidMount(){
-    this.setState({employees: await userService.getUsers()})
-    this.viewWeek(await this.getWeek())
+    await this.setState({employees: await userService.getUsers()})
+    await this.viewWeek(await this.getWeek())
+    console.log('mounted')
+    console.log(this.state.employees)
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.state.week != prevState.week || this.state.year != prevState.year){
       this.viewWeek(await this.getWeek())
     }
+    console.log('updated')
   }
 
   getList = id => this.state[id]
@@ -158,7 +161,7 @@ export default class Planner extends Component {
           <input type='time' id='endTime' />
           <button onClick={this.saveWeek}>Save Week</button>
         </div>
-        
+
         <DragDropContext onDragEnd={this.onDragEnd}>
           {this.state.employees != null && this.state.employees.length > 0 &&
             <PlannerEmployeeItemList droppableId='employees' items={this.state.employees} />

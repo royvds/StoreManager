@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode development --history-api-fallback",
     "prod": "webpack-dev-server --port 8092 --config ./webpack.config.js --mode production --history-api-fallback",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test": "jest --verbose",
+    "test:watch": "jest --watch --verbose",
+    "test:coverage": "jest --coverage --verbose"
   },
   "jest": {
     "setupFiles": [
@@ -50,6 +50,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "react-hot-loader": "^4.8.2",
+    "react-router-enzyme-context": "^1.2.0",
     "react-test-renderer": "^16.8.6",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",

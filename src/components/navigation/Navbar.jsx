@@ -36,7 +36,7 @@ class Navbar extends Component {
         <img src='/images/logo-small.png' alt='Logo'/>
 
         {auth &&
-          <ul>
+          <ul id='navLinks'>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/login' onClick={this.logout}>Logout</Link></li>
           </ul>
