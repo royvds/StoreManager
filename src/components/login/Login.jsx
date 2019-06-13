@@ -1,14 +1,13 @@
-import ButterToast, { Cinnamon } from 'butter-toast';
+import ButterToast, { Cinnamon } from 'butter-toast'
 import React, { Component } from 'react'
 import Cookies from 'universal-cookie'
-import axios from 'axios'
 import AuthService from '../../services/AuthService'
 
 const authService = new AuthService()
 const cookies = new Cookies()
 const jwtDecode = require('jwt-decode')
 
-require('../../stylesheets/login.sass')
+require('./Login.sass')
 
 export default class Login extends Component {
   constructor(props) {
@@ -25,8 +24,9 @@ export default class Login extends Component {
       password: pass
     }
 
-    authService.login(user).catch((error) => {
-    console.log(error)
+    authService.login(user).then(() => {
+      this.props.history.push('/')
+    }).catch((error) => {
       if (error.response === undefined)
         ButterToast.raise({
             timeout: 5000,
@@ -49,12 +49,11 @@ export default class Login extends Component {
                 title='Login Failed'/>
         })
       })
-    this.props.history.push('/')
   }
 
   render() {
     return (
-      <div className='view-wrapper'>
+      <div className='view-wrapper' id='comp-login'>
         <form id='loginForm' onSubmit={(e) =>
             this.login(document.getElementById('loginForm-email').value,
             document.getElementById('loginForm-password').value, e)}>

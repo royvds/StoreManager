@@ -1,0 +1,23 @@
+@import '../../stylesheets/variables'
+@import '../../stylesheets/palette'
+
+$loginFormHeight: 500px
+$loginFormWidth: 400px
+
+#comp-login
+  #loginForm
+    width: $loginFormWidth
+    height: $loginFormHeight
+    background-color: $nav-color
+    position: absolute
+    left: 50%
+    transform: translateX(-50%)
+    margin-top: 120px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    border-radius: 10px
+    box-shadow: 5px 5px 5px $action-blue-light
+    & > *
+      width: 70%

@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie'
 import axios from 'axios/index'
 import uuidv1 from 'uuid/v1'
 import React from 'react'
+import Principal from "../utils/Principal";
 
 require("babel-polyfill")
 
@@ -11,27 +12,24 @@ const cookies = new Cookies()
 
 export default class WeekService {
   async getWeek(year, week) {
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `http://localhost:8090/api/planner/week/${year}/${week}/`,
+        headers: {
+          Authorization: Principal.getAuthorizationHeader()
+        }
+      })
 
-
-
-    // try {
-    //   const response = await axios({
-    //     method: 'get',
-    //     url: `http://localhost:8090/api/planner/week/${year}/${week}/`,
-    //     headers: {
-    //       Authorization: 'Bearer ' + cookies.get('jwt').accessToken
-    //     }
-    //   })
-    //
-    //   return this.prepareWeek(response.data)
-    // } catch (e) {
-    //   ButterToast.raise({
-    //     timeout: 5000,
-    //     content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
-    //                              content={() => <p>There might be a connection error, please try again later.</p>}
-    //                              title='Could not retrieve week data!'/>
-    //   })
-    // }
+      return this.prepareWeek(response.data)
+    } catch (e) {
+      ButterToast.raise({
+        timeout: 5000,
+        content: <Cinnamon.Crisp scheme={Cinnamon.Crisp.SCHEME_RED}
+                                 content={() => <p>There might be a connection error, please try again later.</p>}
+                                 title='Could not retrieve week data!'/>
+      })
+    }
   }
 
   async saveWeek(week) {

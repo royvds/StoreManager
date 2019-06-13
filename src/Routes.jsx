@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 import { Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute.jsx'
 
-import Home from './components/home/Home'
+import Dashboard from './components/dashboard/Dashboard'
 import Login from './components/login/Login'
 import Planner from './components/planner/Planner'
 import Error404 from './components/error/Error404'
@@ -13,7 +13,7 @@ const routes = ({props}) => (
   <Switch >
     <Route path='/login' component={Login} />
 
-    <PrivateRoute allowedRoles={'ROLE_AUTHENTICATED'} exact path='/' component={Home} />
+    <PrivateRoute allowedRoles={'ROLE_AUTHENTICATED'} exact path='/' component={Dashboard} />
 
     <Route path='/planner' component={Planner} />
 

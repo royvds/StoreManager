@@ -1,0 +1,32 @@
+#comp-dashboard
+  margin-top: 60px
+  display: flex
+  flex-direction: row
+  #pages
+    width: 60%
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-evenly
+    & > a
+      display: block
+      width: 200px
+      height: 200px
+      border-radius: 15px
+      background-color: white
+      -webkit-box-sizing: border-box
+      -moz-box-sizing: border-box
+      box-sizing: border-box
+      padding: 10px
+      text-decoration: none
+      color: black
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+      &:hover, &:focus
+        box-shadow: 0 4px 8px 0 rgba(98, 181, 229, 0.2), 0 6px 20px 0 rgba(98, 181, 229, 0.19)
+      &:focus
+        outline: none
+        color: blue
+  .week-overview-day
+    display: flex
+    flex-direction: row
+
