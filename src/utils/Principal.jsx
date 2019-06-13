@@ -7,6 +7,10 @@ export default class Principal {
     cookies.set('jwt', token)
   }
 
+  static deleteJwt() {
+    cookies.remove('jwt')
+  }
+
   static getId() {
     return jwtDecode(cookies.get('jwt').accessToken).sub
   }

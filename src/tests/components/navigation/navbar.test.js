@@ -1,4 +1,3 @@
-import { shallow, mount, render } from 'enzyme'
 import jwt from '../../../services/__mocks__/data/jwt.json'
 import React from 'react'
 import Navbar from '../../../components/navigation/Navbar'
@@ -11,9 +10,7 @@ require("babel-polyfill")
 describe('Login Component', () => {
 
     it('Test if navigation has links when authenticated and no links when not', async () => {
-
         const mockRouter = new ReactRouterEnzymeContext()
-
         const wrapper = shallow(<Navbar.WrappedComponent {...mockRouter.props()}/>)
 
         expect(wrapper.exists('#navLinks')).toBe(false)

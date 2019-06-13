@@ -42,7 +42,6 @@ export default class Planner extends Component {
     if (this.state.week != prevState.week || this.state.year != prevState.year){
       this.viewWeek(await this.getWeek())
     }
-    console.log('updated')
   }
 
   getList = id => this.state[id]

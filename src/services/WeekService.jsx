@@ -1,10 +1,10 @@
 import ButterToast, {Cinnamon} from 'butter-toast'
-import {DateTime, Info} from 'luxon'
+import {Info} from 'luxon'
 import Cookies from 'universal-cookie'
 import axios from 'axios/index'
 import uuidv1 from 'uuid/v1'
 import React from 'react'
-import Principal from "../utils/Principal";
+import Principal from '../utils/Principal'
 
 require("babel-polyfill")
 

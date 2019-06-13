@@ -1,8 +1,5 @@
-import { shallow, mount, render } from 'enzyme'
 import React from 'react'
 import Planner from '../../../components/planner/Planner'
-import Cookies from 'universal-cookie'
-const cookies = new Cookies()
 
 jest.mock('../../../services/UserService')
 jest.mock('../../../services/WeekService')
@@ -24,7 +21,7 @@ describe('Planner Component', () => {
     it('Test if Employees are loaded in', async () => {
         const wrapper = mount(<Planner />, { attachTo: window.domNode })
         await flushPromises()
-        await wrapper.update()
+        wrapper.update()
         expect(wrapper.exists('#planner-employeelist')).toBe(true)
         wrapper.unmount()
     })
@@ -32,7 +29,7 @@ describe('Planner Component', () => {
     it('Test if Employees are loaded in', async () => {
         const wrapper = mount(<Planner />, { attachTo: window.domNode })
         await flushPromises()
-        await wrapper.update()
+        wrapper.update()
         expect(wrapper.exists('#planner')).toBe(true)
         expect(wrapper.find('#planner').getDOMNode().childNodes.length === 7)
         wrapper.unmount()

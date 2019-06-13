@@ -17,9 +17,7 @@ export default class WeekService {
             tasks: null
         })
 
-        return new Promise(resolve => {
-            resolve(output)
-        })
+        return new Promise(resolve => resolve(output))
     }
 
     async saveWeek(week) {
@@ -31,9 +29,7 @@ export default class WeekService {
             tasks: week.tasks
         })
 
-        return new Promise(resolve => {
-            resolve(output)
-        })
+        return new Promise(resolve => resolve(output))
     }
 
     prepareWeek(weekResponse) {
