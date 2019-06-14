@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import TaskService from '../../services/TaskService'
-import { Info } from 'luxon'
+import { DateTime, Info } from 'luxon'
 
 require('./Dashboard.sass')
 require("babel-polyfill")
 
 const taskService = new TaskService()
+
+require('./WeekOverview.sass')
 
 export default class WeekOverview extends Component {
   state = ({tasks: []})
@@ -17,6 +19,12 @@ export default class WeekOverview extends Component {
       task.endDateTime = new Date(task.endDateTime)
     })
     this.setState({tasks: tasks})
+
+    let day = 5
+
+    console.log(
+      DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.week, weekday: day == 0 ? 6 : day-1 }).toFormat("dd/MM")
+    )
   }
 
   arraymove(arr, fromIndex, toIndex) {
@@ -32,6 +40,8 @@ export default class WeekOverview extends Component {
         days.push(task.beginDateTime.getDay())
     })
 
+    const {year, weekNumber} = this.props
+
     days.sort() // sort array, if sunday is first day move it to last position
     if (days[0] == 0) this.arraymove(days, 0, days.length)
 
@@ -39,7 +49,7 @@ export default class WeekOverview extends Component {
       <div id='comp-week-overview'>
         {days.map((day, index) => {
           return (<div id={`overview-${Info.weekdays()[day == 0 ? 6 : day-1].toLowerCase()}`} key={index}>
-            <h3>{Info.weekdays()[day == 0 ? 6 : day-1]}</h3>
+            <h3>{Info.weekdays()[day == 0 ? 6 : day-1]} {DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.week, weekday: day == 0 ? 7 : day }).toFormat("dd/MM")}</h3>
             {this.state.tasks.map((task, index) => {
               if (task.beginDateTime.getDay() == day) {return (<div key={index} className='week-overview-day'>
                     <p>{task.beginDateTime.getHours() + ':' + task.beginDateTime.getMinutes()}</p>

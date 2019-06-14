@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios/index'
 import {Link} from "react-router-dom"
 import {DateTime} from "luxon"
 import WeekOverview from "./WeekOverview"
 import Principal from '../../utils/Principal'
+import Notifications from './Notifications'
 
 require('./Dashboard.sass')
 require("babel-polyfill")
@@ -18,6 +18,11 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className='view-wrapper' id='comp-dashboard'>
+        <div id='dashboard-header'>
+          <Notifications />
+          <WeekOverview year={this.state.year} week={this.state.week} userId={Principal.getId()} />
+        </div>
+
         <div id='pages'>
           <Link to='/planner'>
             <h3>Planner</h3>
@@ -28,8 +33,6 @@ export default class Dashboard extends Component {
             <p>See when you have to work</p>
           </Link>
         </div>
-
-        <WeekOverview year={this.state.year} week={this.state.week} userId={Principal.getId()} />
       </div>
     )
   }
