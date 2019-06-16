@@ -16,6 +16,7 @@ export default class Dashboard extends Component {
   }
 
   render() {
+    const role = Principal.getRole()
     return (
       <div className='view-wrapper' id='comp-dashboard'>
         <div id='dashboard-header'>
@@ -24,10 +25,12 @@ export default class Dashboard extends Component {
         </div>
 
         <div id='pages'>
-          <Link to='/planner'>
-            <h3>Planner</h3>
-            <p>Make a planning for the coming weeks</p>
-          </Link>
+          {(role.indexOf("ROLE_MANAGER") !== -1 || role.indexOf("ROLE_ASSISTANT_MANAGER") !== -1 || role.indexOf("ROLE_LEADER") !== -1) &&
+            <Link to='/planner'>
+              <h3>Planner</h3>
+              <p>Make a planning for the coming weeks</p>
+            </Link>
+          }
           <Link to='/week'>
             <h3>Week Overview</h3>
             <p>See when you have to work</p>
