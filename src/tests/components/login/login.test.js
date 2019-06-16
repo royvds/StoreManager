@@ -1,8 +1,7 @@
 import React from 'react'
 import Login from '../../../components/login/Login'
-import Cookies from 'universal-cookie'
 import ReactRouterEnzymeContext from "react-router-enzyme-context";
-const cookies = new Cookies()
+import Principal from "../../../utils/Principal";
 
 require("babel-polyfill")
 
@@ -21,9 +20,8 @@ describe('Login Component', () => {
     const wrapper = mount(<Login {...mockRouter.props()} />, { attachTo: window.domNode })
     const mailInput = wrapper.find('#loginForm-email')
     const passwordInput = wrapper.find('#loginForm-password')
-    const submitButton = wrapper.find('#loginForm-submit')
 
-    cookies.remove('jwt')
+    Principal.deleteJwt()
 
     mailInput.getDOMNode().value = 'vdsteenroy@hotmail.nl'
     passwordInput.getDOMNode().value = 'Password1'
@@ -38,7 +36,7 @@ describe('Login Component', () => {
     }
 
     await sleep(function(){
-      expect(cookies.get('jwt').accessToken)
+      expect(Principal.getAccessToken())
     })
   })
 

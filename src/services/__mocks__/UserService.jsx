@@ -16,8 +16,6 @@ export default class UserService {
             })
         })
 
-        return new Promise(resolve => {
-            resolve(output)
-        })
+        return new Promise(resolve => resolve(output))
     }
 }

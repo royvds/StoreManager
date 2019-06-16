@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
 
-require('../../stylesheets/nav.sass')
+require('./Navbar.sass')
 
 class Navbar extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Navbar extends Component {
   render() {
     const {auth} = this.state
     return (
-      <nav className='noselect'>
+      <nav className='noselect' id='comp-navbar'>
         <img src='/images/logo-small.png' alt='Logo'/>
 
         {auth &&

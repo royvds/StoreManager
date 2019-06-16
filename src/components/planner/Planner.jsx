@@ -7,13 +7,13 @@ import { DateTime, Info } from 'luxon'
 import UserService from '../../services/UserService'
 import WeekService from '../../services/WeekService'
 import {reorder, move, createTask} from './DragAndDrop'
-import {getDate} from './Time'
-import {processWeek} from './Week'
+import {getDate} from '../../utils/Time'
+import {processWeek} from '../../utils/Week'
 
 const userService = new UserService()
 const weekService = new WeekService()
 
-require('../../stylesheets/planner.sass')
+require('./Planner.sass')
 
 export default class Planner extends Component {
   state = {
@@ -34,17 +34,14 @@ export default class Planner extends Component {
   }
 
   async componentDidMount(){
-    await this.setState({employees: await userService.getUsers()})
-    await this.viewWeek(await this.getWeek())
-    console.log('mounted')
-    console.log(this.state.employees)
+    this.setState({employees: await userService.getUsers()})
+    this.viewWeek(await this.getWeek())
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.state.week != prevState.week || this.state.year != prevState.year){
       this.viewWeek(await this.getWeek())
     }
-    console.log('updated')
   }
 
   getList = id => this.state[id]
@@ -149,7 +146,7 @@ export default class Planner extends Component {
 
   render() {
     return (
-      <div className='view-wrapper noselect'>
+      <div className='view-wrapper noselect' id='comp-planner'>
         <div id='planner-header'>
           <p onClick={this.goToPreviousWeek}>&lt;</p>
           <p>Week {this.state.week}</p>

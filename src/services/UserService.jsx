@@ -1,12 +1,10 @@
 import ButterToast, {Cinnamon} from 'butter-toast'
-import Cookies from 'universal-cookie'
 import axios from 'axios/index'
 import uuidv1 from 'uuid/v1'
 import React from 'react'
+import Principal from "../utils/Principal";
 
 require("babel-polyfill")
-
-const cookies = new Cookies()
 
 export default class UserService {
   async getUsers() {
@@ -17,7 +15,7 @@ export default class UserService {
         method: 'get',
         url: 'http://localhost:8090/api/user',
         headers: {
-          Authorization: 'Bearer ' + cookies.get('jwt').accessToken
+          Authorization: Principal.getAuthorizationHeader()
         }
       })
 
