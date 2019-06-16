@@ -1,0 +1,35 @@
+@import '../../stylesheets/variables'
+@import '../../stylesheets/palette'
+
+#comp-week
+  #overview-header
+    width: 100%
+    height: 100px
+    text-align: center
+    & > p
+      line-height: 100px
+      font-size: 22px
+      display: inline-block
+      &:nth-child(2)
+        padding: 0 10px
+      &:nth-child(odd):hover
+        cursor: pointer
+  #overview-week
+    width: 100%
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+  .comp-week-day
+    width: 10%
+    display: flex
+    flex-direction: column
+    h3
+      margin-bottom: 20px
+    div
+      margin-bottom: 5px
+      background-color: $action-blue-light
+      padding: 5px
+      box-sizing: border-box
+      p:first-child
+        font-weight: 800
+

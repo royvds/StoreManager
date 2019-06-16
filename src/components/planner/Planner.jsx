@@ -7,8 +7,8 @@ import { DateTime, Info } from 'luxon'
 import UserService from '../../services/UserService'
 import WeekService from '../../services/WeekService'
 import {reorder, move, createTask} from './DragAndDrop'
-import {getDate} from './Time'
-import {processWeek} from './Week'
+import {getDate} from '../../utils/Time'
+import {processWeek} from '../../utils/Week'
 
 const userService = new UserService()
 const weekService = new WeekService()

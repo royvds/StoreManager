@@ -1,6 +1,6 @@
 import uuidv1 from 'uuid/v1'
 import {DateTime} from 'luxon'
-import {getDateTime, getHours, getMinutes, getDayIndex} from './Time'
+import {getDateTime, getHours, getMinutes, getDayIndex} from '../../utils/Time'
 
 // reordering the result in an array
 export function reorder(list, startIndex, endIndex) {

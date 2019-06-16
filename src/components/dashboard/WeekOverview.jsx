@@ -23,7 +23,7 @@ export default class WeekOverview extends Component {
     let day = 5
 
     console.log(
-      DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.week, weekday: day == 0 ? 6 : day-1 }).toFormat("dd/MM")
+      DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.Week, weekday: day == 0 ? 6 : day-1 }).toFormat("dd/MM")
     )
   }
 
@@ -49,7 +49,7 @@ export default class WeekOverview extends Component {
       <div id='comp-week-overview'>
         {days.map((day, index) => {
           return (<div id={`overview-${Info.weekdays()[day == 0 ? 6 : day-1].toLowerCase()}`} key={index}>
-            <h3>{Info.weekdays()[day == 0 ? 6 : day-1]} {DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.week, weekday: day == 0 ? 7 : day }).toFormat("dd/MM")}</h3>
+            <h3>{Info.weekdays()[day == 0 ? 6 : day-1]} {DateTime.fromObject({weekYear: this.props.year, weekNumber: this.props.Week, weekday: day == 0 ? 7 : day }).toFormat("dd/MM")}</h3>
             {this.state.tasks.map((task, index) => {
               if (task.beginDateTime.getDay() == day) {return (<div key={index} className='week-overview-day'>
                     <p>{task.beginDateTime.getHours() + ':' + task.beginDateTime.getMinutes()}</p>

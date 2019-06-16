@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import { getTimeFromDate } from './Time'
+import { getTimeFromDate } from '../../utils/Time'
 
 const { DateTime } = require('luxon')
 const grid = 8
